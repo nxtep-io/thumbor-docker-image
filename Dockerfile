@@ -1,5 +1,9 @@
 FROM julianbei/alpine-opencv-microimage:p2-3.1 AS build
+
+# Variables
+ENV PORT=8888
 ENV THUMBOR_VERSION 6.3.2
+
 RUN apk add --no-cache libjpeg-turbo-dev libpng-dev tiff-dev curl-dev jasper-dev
 RUN pip install --upgrade pip
 RUN pip install thumbor==${THUMBOR_VERSION}
@@ -14,4 +18,6 @@ RUN ln -s /usr/local/bin/python /usr/bin/python
 ENV PYTHONPATH /usr/lib/python2.7/site-packages:/usr/local/lib/python2.7/site-packages
 
 ENTRYPOINT ["/usr/bin/thumbor"]
-EXPOSE 8888
+
+## Expose and startup
+EXPOSE ${PORT}
